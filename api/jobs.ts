@@ -1,6 +1,6 @@
-import type { EligibilityStatus } from "../server/jobTypes.ts";
-import { searchJobs } from "../server/search.ts";
-import type { VercelRequest, VercelResponse } from "./vercelTypes";
+import type { EligibilityStatus } from "../server/jobTypes.js";
+import { searchJobs } from "../server/search.js";
+import type { VercelRequest, VercelResponse } from "./vercelTypes.js";
 
 function single(value: string | string[] | undefined, fallback: string) {
   if (Array.isArray(value)) return value[0] ?? fallback;

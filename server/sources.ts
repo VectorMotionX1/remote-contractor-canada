@@ -1,4 +1,4 @@
-import type { Job } from "./jobTypes.ts";
+import type { Job } from "./jobTypes.js";
 import { XMLParser } from "fast-xml-parser";
 import {
   inferContractType,
@@ -10,7 +10,7 @@ import {
   scoreJob,
   stableId,
   stripHtml
-} from "./utils.ts";
+} from "./utils.js";
 
 type SourceResult = {
   jobs: Job[];

@@ -1,5 +1,4 @@
-import crypto from "node:crypto";
-import type { EligibilityStatus, Job } from "./jobTypes.ts";
+import type { EligibilityStatus, Job } from "./jobTypes.js";
 
 const skillTerms = [
   "react",
@@ -35,7 +34,12 @@ const categories: Array<[string, string[]]> = [
 ];
 
 export function stableId(parts: string[]) {
-  return crypto.createHash("sha1").update(parts.join("|").toLowerCase()).digest("hex").slice(0, 16);
+  const input = parts.join("|").toLowerCase();
+  let hash = 5381;
+  for (let index = 0; index < input.length; index += 1) {
+    hash = (hash * 33) ^ input.charCodeAt(index);
+  }
+  return Math.abs(hash).toString(36).padStart(8, "0").slice(0, 16);
 }
 
 export function stripHtml(value: string) {

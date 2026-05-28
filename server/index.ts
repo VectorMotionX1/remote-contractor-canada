@@ -1,6 +1,6 @@
 import express from "express";
-import type { EligibilityStatus } from "./jobTypes.ts";
-import { searchJobs } from "./search.ts";
+import type { EligibilityStatus } from "./jobTypes.js";
+import { searchJobs } from "./search.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 5174);

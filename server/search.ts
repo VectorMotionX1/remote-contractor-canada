@@ -5,9 +5,9 @@ import {
   fetchRemoteFirstJobs,
   fetchRemoteOkJobs,
   fetchRemotiveJobs
-} from "./sources.ts";
-import { dedupeJobs } from "./utils.ts";
-import type { EligibilityStatus, JobSearchResponse } from "./jobTypes.ts";
+} from "./sources.js";
+import { dedupeJobs } from "./utils.js";
+import type { EligibilityStatus, JobSearchResponse } from "./jobTypes.js";
 
 export type SearchParams = {
   query: string;
