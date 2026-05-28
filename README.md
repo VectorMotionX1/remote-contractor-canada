@@ -2,7 +2,7 @@
 
 Local-first web app for finding remote contractor jobs that are relevant to candidates in Canada. The MVP focuses on collecting jobs from pluggable sources, normalizing them into one searchable catalog, deduplicating repeated postings, scoring fit, and letting users save searches for repeat review.
 
-This repository includes a working MVP local web app plus project documentation. The app currently searches live API-friendly sources, normalizes listings, estimates Canada eligibility, deduplicates obvious repeats, and persists saved/dismissed jobs in browser storage.
+This repository includes a working MVP web app plus project documentation. The app can search an indexed Supabase job catalog when configured, or fall back to live API-friendly sources. It normalizes listings, estimates Canada eligibility, deduplicates obvious repeats, and persists saved/dismissed jobs in browser storage.
 
 ## MVP Goals
 
@@ -50,13 +50,37 @@ npm run lint
 curl 'http://127.0.0.1:5174/api/jobs?q=react%20contract%20Canada'
 ```
 
+## Supabase Search Setup
+
+The recommended production path is Supabase-backed search. Live source search is still available as a fallback, but Supabase gives more stable results because jobs are ingested into one indexed table before users search.
+
+1. Create a Supabase project.
+2. Run the SQL in `supabase/migrations/001_jobs.sql` in the Supabase SQL editor.
+3. Copy `.env.example` to `.env.local` and set:
+
+```bash
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```
+
+4. Ingest jobs:
+
+```bash
+npm run db:ingest -- "remote contract Canada"
+```
+
+5. Add the same `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` environment variables to Vercel and redeploy.
+
+The public API will automatically use Supabase when those variables exist. If they are missing or Supabase errors, it falls back to live sources and returns a warning.
+
 ## Current Stack
 
 - Frontend: React, Vite, TypeScript.
 - Backend: Node.js, TypeScript, Express.
 - Live sources: Remotive, Arbeitnow, Remote OK, Himalayas, RemoteFirstJobs, and HireWeb3 public APIs/RSS feeds.
+- Database search: optional Supabase Postgres table with full-text search and trigram indexes.
 - Local state: browser `localStorage` for saved and dismissed jobs.
-- Search/scoring: in-process normalization, filtering, dedupe, and heuristic scoring.
+- Search/scoring: Supabase indexed search when configured; in-process normalization, filtering, dedupe, and heuristic scoring for ingestion and fallback search.
 
 The architecture doc still describes the next durable version with SQLite, FTS5, saved searches, source run history, and persisted ingestion.
 
