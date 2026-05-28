@@ -17,7 +17,8 @@ body {
 
 button,
 input,
-select {
+select,
+a {
   font: inherit;
 }
 
@@ -197,23 +198,50 @@ select {
   border-color: #bdd5c8;
 }
 
-.jobRow strong,
 .jobRow span {
   display: block;
-}
-
-.jobRow strong {
-  margin: 8px 0 4px;
 }
 
 .jobRow.muted {
   opacity: 0.48;
 }
 
+.jobTitleLink {
+  align-items: start;
+  color: #18251d;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 6px;
+  line-height: 1.25;
+  margin: 8px 0 4px;
+  text-decoration: none;
+}
+
+.jobTitleLink:hover,
+.detail h2 a:hover,
+.sourceUrl a:hover {
+  text-decoration: underline;
+}
+
 .rowFoot {
   color: #69746d;
   font-size: 0.88rem;
   margin-top: 8px;
+}
+
+.miniApply {
+  align-items: center;
+  background: #1f3b2d;
+  border-radius: 8px;
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 0.84rem;
+  font-weight: 900;
+  gap: 6px;
+  margin-top: 10px;
+  min-height: 32px;
+  padding: 0 10px;
+  text-decoration: none;
 }
 
 .status {
@@ -262,6 +290,11 @@ select {
   margin: 12px 0 8px;
 }
 
+.detail h2 a {
+  color: #18251d;
+  text-decoration: none;
+}
+
 .detail p {
   color: #56625b;
   line-height: 1.6;
@@ -269,7 +302,24 @@ select {
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+  justify-content: flex-end;
+}
+
+.applyButton {
+  align-items: center;
+  background: #1f7a55;
+  border: 1px solid #1f7a55;
+  border-radius: 8px;
+  color: white;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .iconButton {
@@ -289,6 +339,30 @@ select {
   background: #1f7a55;
   border-color: #1f7a55;
   color: white;
+}
+
+.sourceUrl {
+  background: #f7f8f4;
+  border: 1px solid #d8ded7;
+  border-radius: 8px;
+  margin-top: 16px;
+  padding: 10px 12px;
+}
+
+.sourceUrl span {
+  color: #68746d;
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.sourceUrl a {
+  color: #1f5f86;
+  display: block;
+  overflow-wrap: anywhere;
+  text-decoration: none;
 }
 
 .facts {

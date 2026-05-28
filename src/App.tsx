@@ -3,6 +3,7 @@ import {
   Bookmark,
   BriefcaseBusiness,
   CalendarDays,
+  CheckCircle2,
   ExternalLink,
   EyeOff,
   Filter,
@@ -182,19 +183,42 @@ export function App() {
             <div className="empty">No roles match these filters.</div>
           ) : (
             visibleJobs.map((job) => (
-              <button
-                type="button"
+              <div
                 className={`jobRow ${selectedJob?.id === job.id ? "active" : ""} ${dismissed.has(job.id) ? "muted" : ""}`}
                 key={job.id}
                 onClick={() => setSelectedId(job.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") setSelectedId(job.id);
+                }}
               >
                 <span className={`status ${job.canadaEligible}`}>{confidenceLabel(job)}</span>
-                <strong>{job.title}</strong>
+                <a
+                  className="jobTitleLink"
+                  href={job.applicationUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  {job.title}
+                  <ExternalLink size={14} />
+                </a>
                 <span>{job.company}</span>
                 <span className="rowFoot">
                   {job.contractType} · {job.source}
                 </span>
-              </button>
+                <a
+                  className="miniApply"
+                  href={job.applicationUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  Apply
+                  <ExternalLink size={14} />
+                </a>
+              </div>
             ))
           )}
         </aside>
@@ -205,10 +229,18 @@ export function App() {
               <div className="detailHead">
                 <div>
                   <span className={`status ${selectedJob.canadaEligible}`}>{confidenceLabel(selectedJob)}</span>
-                  <h2>{selectedJob.title}</h2>
+                  <h2>
+                    <a href={selectedJob.applicationUrl} target="_blank" rel="noreferrer">
+                      {selectedJob.title}
+                    </a>
+                  </h2>
                   <p>{selectedJob.company}</p>
                 </div>
                 <div className="actions">
+                  <a className="applyButton" href={selectedJob.applicationUrl} target="_blank" rel="noreferrer">
+                    <CheckCircle2 size={19} />
+                    Apply on {selectedJob.source}
+                  </a>
                   <button
                     className={saved.has(selectedJob.id) ? "iconButton active" : "iconButton"}
                     type="button"
@@ -229,6 +261,13 @@ export function App() {
                     <ExternalLink size={19} />
                   </a>
                 </div>
+              </div>
+
+              <div className="sourceUrl">
+                <span>Source URL</span>
+                <a href={selectedJob.applicationUrl} target="_blank" rel="noreferrer">
+                  {selectedJob.applicationUrl}
+                </a>
               </div>
 
               <div className="facts">
