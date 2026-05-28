@@ -3,6 +3,10 @@ import type { EligibilityStatus, Job } from "./jobTypes.js";
 import type { SearchParams } from "./search.js";
 import { significantTerms } from "./search.js";
 
+declare const process: {
+  env: Record<string, string | undefined>;
+};
+
 type JobRow = {
   id: string;
   title: string;
